@@ -9,13 +9,20 @@ class Game {
         this.boardEl = document.getElementById('player-board');
         this.linesSpan = document.getElementById('playerLines');
         this.restartBtn = document.getElementById('restartBtn');
+        this.winOverlay = document.getElementById('winOverlay');
+        this.playAgainBtn = document.getElementById('playAgainBtn');
 
         // Bind methods
         this.handleCellClick = this.handleCellClick.bind(this);
         this.restart = this.restart.bind(this);
+        this.hideWinOverlay = this.hideWinOverlay.bind(this);
 
-        // Event listener for restart
+        // Event listeners
         this.restartBtn.addEventListener('click', this.restart);
+        this.playAgainBtn.addEventListener('click', this.restart);
+        this.winOverlay.addEventListener('click', (e) => {
+            if (e.target === this.winOverlay) this.hideWinOverlay();
+        });
 
         // Initialize game
         this.init();
@@ -24,12 +31,10 @@ class Game {
     // Generate a random 5x5 board with numbers 1-25 shuffled
     static generateRandomBoard() {
         const numbers = Array.from({ length: 25 }, (_, i) => i + 1);
-        // Fisher-Yates shuffle
         for (let i = numbers.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
         }
-        // Convert to 5x5
         const board = [];
         for (let i = 0; i < 5; i++) {
             board.push(numbers.slice(i * 5, i * 5 + 5));
@@ -37,21 +42,18 @@ class Game {
         return board;
     }
 
-    // Initialize / reset game state
     init() {
         this.board = Game.generateRandomBoard();
         this.marked = Array(5).fill().map(() => Array(5).fill(false));
         this.lines = 0;
         this.gameOver = false;
-
+        this.hideWinOverlay();
         this.renderBoard();
         this.updateLineCount();
     }
 
-    // Render the board (always show marks because it's single player)
     renderBoard() {
-        this.boardEl.innerHTML = ''; // Clear
-
+        this.boardEl.innerHTML = '';
         for (let r = 0; r < 5; r++) {
             for (let c = 0; c < 5; c++) {
                 const cell = document.createElement('div');
@@ -66,81 +68,71 @@ class Game {
         }
     }
 
-    // Click handler for cells
     handleCellClick(e) {
         if (this.gameOver) return;
-
         const cell = e.currentTarget;
         const row = parseInt(cell.dataset.row);
         const col = parseInt(cell.dataset.col);
+        if (this.marked[row][col]) return;
 
-        if (this.marked[row][col]) return; // already marked
-
-        // Mark the cell
         this.marked[row][col] = true;
         cell.classList.add('marked');
 
-        // Recalculate lines
         this.lines = this.countLines();
         this.updateLineCount();
 
-        // Check win condition
         if (this.lines >= 5) {
             this.gameOver = true;
-            alert('You Win! 🎉');
+            this.showWinOverlay();
         }
     }
 
-    // Count completed lines (rows, columns, diagonals) from current marked
     countLines() {
         let lineCount = 0;
 
-        // Check rows
+        // rows
         for (let r = 0; r < 5; r++) {
             if (this.marked[r].every(cell => cell)) lineCount++;
         }
 
-        // Check columns
+        // columns
         for (let c = 0; c < 5; c++) {
             let full = true;
             for (let r = 0; r < 5; r++) {
-                if (!this.marked[r][c]) {
-                    full = false;
-                    break;
-                }
+                if (!this.marked[r][c]) { full = false; break; }
             }
             if (full) lineCount++;
         }
 
-        // Check main diagonal (top-left to bottom-right)
+        // main diagonal
         let diag1 = true;
         for (let i = 0; i < 5; i++) {
-            if (!this.marked[i][i]) {
-                diag1 = false;
-                break;
-            }
+            if (!this.marked[i][i]) { diag1 = false; break; }
         }
         if (diag1) lineCount++;
 
-        // Check other diagonal (top-right to bottom-left)
+        // other diagonal
         let diag2 = true;
         for (let i = 0; i < 5; i++) {
-            if (!this.marked[i][4 - i]) {
-                diag2 = false;
-                break;
-            }
+            if (!this.marked[i][4 - i]) { diag2 = false; break; }
         }
         if (diag2) lineCount++;
 
         return lineCount;
     }
 
-    // Update UI line counter
     updateLineCount() {
         this.linesSpan.textContent = this.lines;
     }
 
-    // Restart the game
+    showWinOverlay() {
+        this.winOverlay.classList.remove('hidden');
+    }
+
+    hideWinOverlay() {
+        this.winOverlay.classList.add('hidden');
+    }
+
     restart() {
         this.init();
     }

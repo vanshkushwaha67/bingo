@@ -3,22 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single‑Player Bingo</title>
+    <title>Bingo · single player</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="game-container">
-        <h1>🎯 Single‑Player Bingo</h1>
+        <h1>✨ Bingo Challenge ✨</h1>
 
-        <div class="boards">
-            <!-- Single board -->
-            <div class="board-wrapper" id="player-wrapper">
-                <h2>Your Board <span class="line-count" id="playerLines">0</span></h2>
-                <div class="board" id="player-board"></div>
+        <div class="stats">
+            <div class="lines-badge">
+                <span class="label">Lines completed</span>
+                <span class="value" id="playerLines">0</span>
             </div>
+            <button class="restart-btn" id="restartBtn">🔄 New game</button>
         </div>
 
-        <button class="restart-btn" id="restartBtn">🔄 New Game</button>
+        <div class="board-wrapper">
+            <div class="board" id="player-board"></div>
+        </div>
+
+        <!-- Win overlay (hidden by default) -->
+        <div class="win-overlay hidden" id="winOverlay">
+            <div class="win-message">
+                <h2>🎉 You Win! 🎉</h2>
+                <p>Congratulations!</p>
+                <button class="play-again" id="playAgainBtn">Play again</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
