@@ -19,7 +19,7 @@ body {
     border-radius: 50px;
     padding: 30px 40px;
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.5), inset 0 0 0 2px #c9ad7e;
-    max-width: 1200px;
+    max-width: 600px;
     width: 100%;
     margin: 20px;
 }
@@ -28,33 +28,14 @@ h1 {
     text-align: center;
     color: #2f5e6e;
     font-size: 2.5rem;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-shadow: 2px 2px 0 #c9a87c;
-}
-
-.turn-indicator {
-    background: #1d434f;
-    border-radius: 40px;
-    padding: 12px 25px;
-    margin: 10px auto 25px;
-    width: fit-content;
-    border: 2px solid #efd49e;
-    box-shadow: inset 0 2px 5px #0f2a30, 0 5px 0 #123138;
-}
-
-.turn-indicator span {
-    color: #f7f2d9;
-    font-size: 2rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 #15363e;
 }
 
 .boards {
     display: flex;
     justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    margin: 20px 0 30px;
+    margin: 10px 0 30px;
 }
 
 .board-wrapper {
@@ -63,13 +44,7 @@ h1 {
     border-radius: 40px;
     border: 4px solid #b49b6b;
     box-shadow: inset 0 0 0 2px #f3e9cc, 0 10px 10px rgba(0,0,0,0.3);
-    transition: all 0.2s;
     min-width: 330px;
-}
-
-.board-wrapper.active-turn {
-    border-color: #f5c542;
-    box-shadow: 0 0 0 4px #ffd966, inset 0 0 0 2px #f3e9cc, 0 10px 10px rgba(0,0,0,0.3);
 }
 
 .board-wrapper h2 {
@@ -118,7 +93,7 @@ h1 {
     box-shadow: 0 5px 0 #6b4e2b;
 }
 
-.cell:hover:not(.marked):not(.inactive) {
+.cell:hover:not(.marked) {
     background: #ffeab5;
     transform: translateY(-2px);
     box-shadow: 0 7px 0 #6b4e2b;
@@ -132,12 +107,6 @@ h1 {
     transform: translateY(2px);
     cursor: default;
     text-decoration: line-through 2px rgba(255,255,255,0.4);
-}
-
-.cell.inactive {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
 }
 
 .restart-btn {
@@ -169,11 +138,7 @@ h1 {
     box-shadow: 0 4px 0 #577a5a;
 }
 
-/* responsive */
-@media (max-width: 800px) {
-    .boards {
-        gap: 20px;
-    }
+@media (max-width: 500px) {
     .board-wrapper {
         min-width: 280px;
     }
