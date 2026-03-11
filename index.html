@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two‑Player Bingo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🎲 Two‑Player Bingo</h1>
+
+        <div class="turn-indicator">
+            <span id="turnText">Player 1 Turn</span>
+        </div>
+
+        <div class="boards">
+            <!-- Player 1 board -->
+            <div class="board-wrapper" id="player1-wrapper">
+                <h2>Player 1 <span class="line-count" id="player1Lines">0</span></h2>
+                <div class="board" id="player1-board"></div>
+            </div>
+
+            <!-- Player 2 board -->
+            <div class="board-wrapper" id="player2-wrapper">
+                <h2>Player 2 <span class="line-count" id="player2Lines">0</span></h2>
+                <div class="board" id="player2-board"></div>
+            </div>
+        </div>
+
+        <button class="restart-btn" id="restartBtn">🔄 Restart Game</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
